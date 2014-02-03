@@ -1,8 +1,11 @@
 !!!
 %html
   %head
-    %title SampleApp
-    = stylesheet_link_tag    "application", :media => "all"
+    %title
+      RoR Sample App
+      |
+      = yield(:title)
+    = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
 
