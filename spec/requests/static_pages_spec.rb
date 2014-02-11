@@ -30,7 +30,7 @@ describe "Static pages" do
 
     it "should have the right title" do
       visit '/static_pages/help'
-      page.should have_selector('title', text: "#{base_title}\n|\nHelp")
+      page.should have_selector('title', text: "#{base_title} | Help")
     end
 
   end
@@ -44,7 +44,7 @@ describe "Static pages" do
 
     it "should have the right title" do
       visit '/static_pages/about'
-      page.should have_selector('title', text: "#{base_title}\n|\nAbout")
+      page.should have_selector('title', text: "#{base_title} | About")
     end
 
   end
@@ -58,7 +58,7 @@ describe "Static pages" do
 
     it "should have the right title" do
       visit '/static_pages/contact'
-      page.should have_selector('title', text: "#{base_title}\n|\nContact")
+      page.should have_selector('title', text: "#{base_title} | Contact")
     end
 
   end
