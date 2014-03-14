@@ -11,6 +11,7 @@ group :development, :test do
   gem 'rspec-rails', '2.9.0'
   gem 'guard-rspec', '0.5.5'
   gem 'annotate', '~> 2.4.1.beta'
+  gem 'parallel_tests'
 end
 
 # Gems used only for assets and not required
@@ -34,7 +35,6 @@ group :test do
 end
 
 gem 'pg', '0.12.2'
-
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
