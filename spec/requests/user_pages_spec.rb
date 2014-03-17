@@ -21,26 +21,22 @@ describe "User Pages" do
       end
 
       describe "after submission" do
-        before {click_button submit}
+        before { click_button submit }
 
         it { should have_selector('title', text: "Sign Up") }
 
-        it { should have_content("Password can't be blank") }
-        it { should have_content("Name can't be blank") }
-        it { should have_content("Email can't be blank") }
-        it { should have_content("Email is invalid") }
-        it { should have_content("Password is too short (minimum is 6 characters)") }
-        it { should have_content("Password confirmation can't be blank") }
+        it { should have_error_message("Password can't be blank") }
+        it { should have_error_message("Name can't be blank") }
+        it { should have_error_message("Email can't be blank") }
+        it { should have_error_message("Email is invalid") }
+        it { should have_error_message("Password is too short (minimum is 6 characters)") }
+        it { should have_error_message("Password confirmation can't be blank") }
       end
     end
 
     describe "with valid data" do
-      before do
-        fill_in "Name", with: "Mickey Mouse"
-        fill_in "Email", with: "mickey@mouse.com"
-        fill_in "Password", with: "password"
-        fill_in "Confirmation", with: "password"
-      end
+      let(:user) { FactoryGirl.build(:user) }
+      before { valid_user_data(user) }
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count)
@@ -48,10 +44,9 @@ describe "User Pages" do
 
       describe "after saving the user" do
         before { click_button submit }
-        let(:user) { User.find_by_email("mickey@mouse.com") }
 
         it { should have_selector('title', text: user.name) }
-        it { should have_selector('.alert-success', text: 'Welcome') }
+        it { should have_success_message('Welcome') }
         it { should have_link('Sign out') }
       end
     end
