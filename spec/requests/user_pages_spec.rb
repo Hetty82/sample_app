@@ -52,7 +52,7 @@ describe "User Pages" do
     end
   end
 
-  describe "Profile page" do
+  describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
 
@@ -98,6 +98,23 @@ describe "User Pages" do
       specify { user.reload.name.should == new_name }
       specify { user.reload.email.should == new_email }
 
+    end
+  end
+
+  describe "index" do
+    before do
+      sign_in FactoryGirl.create(:user)
+      FactoryGirl.create(:user, name: "Ursula", email: "ursula@sea.com")
+      FactoryGirl.create(:user, name: "Captain Hook", email: "captain@hook.com")
+      visit users_path
+    end
+
+    it { should have_selector('title', text: "All users") }
+    it { should have_selector('h1', text: "All users") }
+    it "should list each user" do
+      User.all.each do |user|
+        page.should have_selector('li', text: user.name)
+      end
     end
   end
 
