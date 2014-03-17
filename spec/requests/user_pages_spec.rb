@@ -21,16 +21,16 @@ describe "User Pages" do
       end
 
       describe "after submission" do
-        before {click_button submit}
+        before { click_button submit }
 
         it { should have_selector('title', text: "Sign Up") }
 
-        it { should have_content("Password can't be blank") }
-        it { should have_content("Name can't be blank") }
-        it { should have_content("Email can't be blank") }
-        it { should have_content("Email is invalid") }
-        it { should have_content("Password is too short (minimum is 6 characters)") }
-        it { should have_content("Password confirmation can't be blank") }
+        it { should have_error_message("Password can't be blank") }
+        it { should have_error_message("Name can't be blank") }
+        it { should have_error_message("Email can't be blank") }
+        it { should have_error_message("Email is invalid") }
+        it { should have_error_message("Password is too short (minimum is 6 characters)") }
+        it { should have_error_message("Password confirmation can't be blank") }
       end
     end
 
@@ -46,7 +46,7 @@ describe "User Pages" do
         before { click_button submit }
 
         it { should have_selector('title', text: user.name) }
-        it { should have_selector('.alert-success', text: 'Welcome') }
+        it { should have_success_message('Welcome') }
         it { should have_link('Sign out') }
       end
     end
