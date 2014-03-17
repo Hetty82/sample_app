@@ -36,7 +36,7 @@ describe "User Pages" do
 
     describe "with valid data" do
       let(:user) { FactoryGirl.build(:user) }
-      before { valid_signup(user) }
+      before { valid_user_data(user) }
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count)
