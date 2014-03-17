@@ -35,12 +35,8 @@ describe "User Pages" do
     end
 
     describe "with valid data" do
-      before do
-        fill_in "Name", with: "Mickey Mouse"
-        fill_in "Email", with: "mickey@mouse.com"
-        fill_in "Password", with: "password"
-        fill_in "Confirmation", with: "password"
-      end
+      let(:user) { FactoryGirl.build(:user) }
+      before { valid_signup(user) }
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count)
@@ -48,7 +44,6 @@ describe "User Pages" do
 
       describe "after saving the user" do
         before { click_button submit }
-        let(:user) { User.find_by_email("mickey@mouse.com") }
 
         it { should have_selector('title', text: user.name) }
         it { should have_selector('.alert-success', text: 'Welcome') }
