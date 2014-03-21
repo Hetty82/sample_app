@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :index, :destroy]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
+  before_filter :not_signed_in_user, only: [:new, :create]
 
   def show
     @user = User.find(params[:id])
@@ -41,10 +42,14 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
-    user_name = user.name
-    user.destroy
-    flash[:success] = "#{user_name} was successfully eliminated."
-    redirect_to users_path
+    if user != current_user
+      user_name = user.name
+      user.destroy
+      flash[:success] = "#{user_name} was successfully eliminated."
+      redirect_to users_path
+    else
+      redirect_to root_path, notice: "You can't destroy yourself. You fool!"
+    end
   end
 
 private
@@ -62,5 +67,11 @@ private
 
   def admin_user
     redirect_to root_path unless current_user.admin?
+  end
+
+  def not_signed_in_user
+    if signed_in?
+      redirect_to root_path, notice: "You're already signed in"
+    end
   end
 end

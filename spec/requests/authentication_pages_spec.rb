@@ -11,6 +11,11 @@ describe "Authentication" do
   end
 
   describe "signin" do
+    it { should_not have_link('Users', href: users_path) }
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Settings') }
+    it { should_not have_link('Sign out', href: signout_path) }
+
     describe "with invalid data" do
       before { visit signin_path }
       before { click_button "Sign in" }
@@ -83,6 +88,14 @@ describe "Authentication" do
           it "should render the desired protected page" do
             page.should have_selector('title', text: "Edit user")
           end
+
+          describe "when signing in again" do
+            before { sign_in user }
+
+            it "should render the default (profile) page" do
+              page.should have_selector('title', text: user.name)
+            end
+          end
         end
       end
     end
@@ -113,6 +126,35 @@ describe "Authentication" do
 
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
+
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe "as an admin" do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      before { sign_in admin }
+
+      describe "submitting a DELETE request to delete their own account" do
+        before { delete user_path(admin) }
+
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe "as a signed in user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+
+      describe "submitting a GET request to the Users#new action" do
+        before { get new_user_path }
+
+        specify { response.should redirect_to(root_path) }
+      end
+
+      describe "submitting a POST request to the Users#create action" do
+        before { post users_path }
 
         specify { response.should redirect_to(root_path) }
       end
