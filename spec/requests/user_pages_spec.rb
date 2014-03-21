@@ -102,11 +102,7 @@ describe "User Pages" do
   end
 
   describe "index" do
-    before(:all) { 50.times { FactoryGirl.create(:user) } }
-    after(:all) { User.delete_all }
-
     let(:user) { FactoryGirl.create(:user) }
-
     before(:each) do
       sign_in user
       visit users_path
@@ -116,15 +112,17 @@ describe "User Pages" do
     it { should have_selector('h1', text: "All users") }
 
     describe "pagination" do
+      before(:all) { 15.times { FactoryGirl.create(:user) } }
+      after(:all) { User.delete_all }
+
       it { should have_selector('.pagination') }
 
       it "should list each user" do
-        User.paginate(page: 1).each do |user|
+        User.paginate(page: 1, per_page: 10).each do |user|
           page.should have_selector('li', text: user.name)
         end
       end
     end
-
   end
 
 end
