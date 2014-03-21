@@ -131,6 +131,18 @@ describe "Authentication" do
       end
     end
 
+    describe "as an admin" do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      before { sign_in admin }
+
+      describe "submitting a DELETE request to delete their own account" do
+        before { delete user_path(admin) }
+
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
     describe "as a signed in user" do
       let(:user) { FactoryGirl.create(:user) }
       before { sign_in user }
