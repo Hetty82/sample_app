@@ -11,6 +11,11 @@ describe "Authentication" do
   end
 
   describe "signin" do
+    it { should_not have_link('Users', href: users_path) }
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Settings') }
+    it { should_not have_link('Sign out', href: signout_path) }
+
     describe "with invalid data" do
       before { visit signin_path }
       before { click_button "Sign in" }
