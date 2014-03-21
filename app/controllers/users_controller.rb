@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update, :index]
+  before_filter :signed_in_user, only: [:edit, :update, :index, :destroy]
   before_filter :correct_user, only: [:edit, :update]
+  before_filter :admin_user, only: :destroy
 
   def show
     @user = User.find(params[:id])
@@ -38,6 +39,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    user_name = user.name
+    user.destroy
+    flash[:success] = "#{user_name} was successfully eliminated."
+    redirect_to users_path
+  end
+
 private
   def signed_in_user
     unless signed_in?
@@ -51,4 +60,7 @@ private
     redirect_to root_path unless current_user?(@user)
   end
 
+  def admin_user
+    redirect_to root_path unless current_user.admin?
+  end
 end
