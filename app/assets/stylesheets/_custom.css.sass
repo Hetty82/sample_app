@@ -44,6 +44,11 @@ p
 
 
 // header
+span
+  display: block
+  float: left
+  padding-top: 14px
+  color: rgba(#fff,.9)
 
 nav
   @extend %clearfix // cause bootstrap didn't even do this
@@ -141,10 +146,29 @@ select,
   @extend .control-group
   @extend .error
 
+// users
+.users
+  list-style: none
+  margin: 0 0 20px 0
+
+  li
+    overflow: auto
+    padding: 10px 0
+    border-top: 1px solid $grayLighter
+
+    &:last-child
+      border-bottom: 1px solid $grayLighter
+
+  img
+    float: left
+    margin-right: 10px
+
+  a
+    line-height: 50px
+    display: inline-block
 
 // miscellaneous
 .debug_dump
   clear: both
   margin-top: 45px
   +box-sizing
-

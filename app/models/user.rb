@@ -9,6 +9,7 @@
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
+#  admin           :boolean         default(FALSE)
 #
 
 class User < ActiveRecord::Base
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
     format: { with: VALID_EMAIL_REGEX },
     uniqueness: { case_sensitive: false }
   has_secure_password # moved it here for ordering error messages
-  validates :password, length: {minimum: 6}
+  validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
 private
