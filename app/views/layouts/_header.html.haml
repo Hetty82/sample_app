@@ -2,6 +2,8 @@
   .navbar-inner
     .container
       = link_to "sample app", root_path, id: "logo"
+      - if signed_in?
+        %span Signed in as #{current_user.name}
 
       %nav
         %ul.nav.pull-right
