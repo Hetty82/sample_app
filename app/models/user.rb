@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   attr_accessible :email, :name, :password, :password_confirmation
+  has_many :microposts
 
   before_save { self.email.downcase! }
   before_save :create_remember_token
