@@ -1,16 +1,30 @@
-.center.hero-unit
-  %h1 Oh my god I am really Bootstrapping this :/
+- if signed_in?
+  .row
+    %aside.span4
+      %section
+        = render 'shared/user_info'
 
-  %h2
-    This is the home page for the
-    %a{href: "http://railstutorial.org/"} Rails Tutorial
-    sample application. And it looks ugly as hell.
+      %section
+        = render 'shared/micropost_form'
 
-  %p I'm learning a lot. But it's going slow.
-  %p Bla bla bla.
-  %p But: I just wrote a failing test. And then made it pass.
-  %p hooray.
+    .span8
+      %h3 Micropost Feed
+      = render 'shared/feed'
 
-  = link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" # jakkes
+- else
+  .center.hero-unit
+    %h1 Oh my god I am really Bootstrapping this :/
 
-= link_to image_tag("rails.png", alt: "Rails"), "http://rubyonrails.org"
+    %h2
+      This is the home page for the
+      %a{href: "http://railstutorial.org/"} Rails Tutorial
+      sample application. And it looks ugly as hell.
+
+    %p I'm learning a lot. But it's going slow.
+    %p Bla bla bla.
+    %p But: I just wrote a failing test. And then made it pass.
+    %p hooray.
+
+    = link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" # jakkes
+
+  = link_to image_tag("rails.png", alt: "Rails"), "http://rubyonrails.org"
