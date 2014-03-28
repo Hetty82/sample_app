@@ -1,4 +1,4 @@
-%li{id: "id_#{feed_item.id}"}
+%li{id: dom_id(feed_item)}
   = link_to gravatar_for(feed_item.user, size: 30), feed_item.user
 
   %span.user= link_to feed_item.user.name, feed_item.user

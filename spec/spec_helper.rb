@@ -20,6 +20,7 @@ Spork.prefork do
 
   RSpec.configure do |config|
     config.include SessionHelpers
+    config.include ActionController::RecordIdentifier, type: :request
 
     # ## Mock Framework
     #

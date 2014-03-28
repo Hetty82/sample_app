@@ -27,7 +27,7 @@ describe "Static pages" do
 
       it "should render the user's feed" do
         user.feed.each do |item|
-          page.should have_selector("li#id_#{item.id}", text: item.content)
+          page.should have_selector("li#micropost_#{item.id}", text: item.content)
         end
       end
     end
