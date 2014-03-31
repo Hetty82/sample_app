@@ -7,3 +7,18 @@
       maxlength: 140
 
   = f.submit "Post", class: "btn btn-large btn-primary"
+
+:javascript
+  $(function() {
+    counter = $('<span class="character_countdown"></span>');
+    $(counter).insertAfter("#micropost_content");
+
+    updateCountdown();
+    $('#micropost_content').change(updateCountdown);
+    $('#micropost_content').keyup(updateCountdown);
+
+    function updateCountdown() {
+      var remaining = 140 - $('#micropost_content').val().length;
+      $('.character_countdown').text(remaining + " characters remaining");
+    }
+  })

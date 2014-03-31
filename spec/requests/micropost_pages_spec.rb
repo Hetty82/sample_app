@@ -40,4 +40,31 @@ describe "Micropost pages" do
       end
     end
   end
+
+  describe "delete links" do
+    let!(:micropost1) { FactoryGirl.create(:micropost, user: user) }
+    let!(:micropost2) { FactoryGirl.create(:micropost, user: FactoryGirl.create(:user)) }
+    before { visit root_path }
+
+    it { should have_link("delete", href: micropost_path(micropost1)) }
+    it { should_not have_link("delete", href: micropost_path(micropost2)) }
+  end
+
+  describe "pagination" do
+    let!(:first_on_next_page) do
+      FactoryGirl.create(:micropost, user: user, content: 'I am on page 2')
+    end
+    let!(:first_10) { 10.times.map { FactoryGirl.create(:micropost, user: user) } }
+    before { visit root_path }
+
+    it { should have_selector('.pagination') }
+
+    it "should list the first ten micropost" do
+      first_10.each do |micropost|
+        page.should have_selector("##{dom_id(micropost)}")
+      end
+      page.should have_no_selector("##{dom_id(first_on_next_page)}")
+    end
+  end
+
 end

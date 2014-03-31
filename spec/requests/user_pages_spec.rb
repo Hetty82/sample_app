@@ -119,15 +119,17 @@ describe "User pages" do
     it { should have_selector('h1', text: "All users") }
 
     describe "pagination" do
-      before(:all) { 15.times { FactoryGirl.create(:user) } }
-      after(:all) { User.delete_all }
+      let!(:first_9) { 9.times.map { FactoryGirl.create(:user) } }
+      let!(:first_on_next_page) { FactoryGirl.create(:user) }
+      before { visit users_path }
 
       it { should have_selector('.pagination') }
 
       it "should list each user" do
-        User.paginate(page: 1, per_page: 10).each do |user|
+        first_9.each do |user|
           page.should have_selector('li', text: user.name)
         end
+        page.should have_no_selector('li', text: first_on_next_page.name)
       end
     end
 
