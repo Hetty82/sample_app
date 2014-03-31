@@ -41,6 +41,15 @@ describe "Micropost pages" do
     end
   end
 
+  describe "delete links" do
+    let!(:micropost1) { FactoryGirl.create(:micropost, user: user) }
+    let!(:micropost2) { FactoryGirl.create(:micropost, user: FactoryGirl.create(:user)) }
+    before { visit root_path }
+
+    it { should have_link("delete", href: micropost_path(micropost1)) }
+    it { should_not have_link("delete", href: micropost_path(micropost2)) }
+  end
+
   describe "pagination" do
     let!(:first_on_next_page) do
       FactoryGirl.create(:micropost, user: user, content: 'I am on page 2')
