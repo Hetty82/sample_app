@@ -3,4 +3,4 @@
 
 %h1= current_user.name
 %span= link_to "view my profile", current_user
-%span= pluralize(current_user.microposts.count, "micropost")
+%span.micropost_counter= pluralize(current_user.microposts.count, "micropost")

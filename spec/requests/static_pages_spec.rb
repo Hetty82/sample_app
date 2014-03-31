@@ -20,14 +20,33 @@ describe "Static pages" do
       let(:user) { FactoryGirl.create(:user) }
       before do
         FactoryGirl.create(:micropost, user: user, content: "Bla bla bla")
-        FactoryGirl.create(:micropost, user: user, content: "Meh meh meh")
         sign_in user
-        visit root_path
       end
 
-      it "should render the user's feed" do
-        user.feed.each do |item|
-          page.should have_selector("li#micropost_#{item.id}", text: item.content)
+      describe "user's feed" do
+        before { visit root_path }
+
+        it "should render the user's feed" do
+          user.feed.each do |item|
+            page.should have_selector("li#micropost_#{item.id}", text: item.content)
+          end
+        end
+      end
+
+      describe "a counter for user's microposts" do
+        describe "with one micropost" do
+          before { visit root_path }
+
+          it { should have_selector(".micropost_counter", text: "1 micropost") }
+        end
+
+        describe "pluralization with multiple microposts" do
+          before do
+            FactoryGirl.create(:micropost, user: user, content: "Meh meh meh")
+            visit root_path
+          end
+
+          it { should have_selector(".micropost_counter", text: "2 microposts") }
         end
       end
     end
