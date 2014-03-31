@@ -127,6 +127,34 @@ aside
     height: 100px
     margin-bottom: 5px
 
+  .stats
+    overflow: auto
+
+    a
+      float: left
+      padding: 0 10px
+      border-left: 1px solid $grayLighter
+      color: gray
+
+      &:first-child
+        padding-left: 0
+        border: 0
+
+      &:hover
+        text-decoration: none
+        color: $blue
+
+      strong
+        display: block
+
+  .character_countdown
+    line-height: 2
+    padding: 0 10px
+    margin-bottom: 15px
+    color: $green
+    border: 1px solid $green
+
+
 // user profile - microposts
 
 .microposts
@@ -143,12 +171,16 @@ aside
   .timestamp
     color: $grayLight
 
-.character_countdown
-  line-height: 2
-  padding: 0 10px
-  margin-bottom: 15px
-  color: $green
-  border: 1px solid $green
+
+// follow pages
+
+.user_avatars
+  overflow: auto
+  margin-top: 10px
+
+  .gravatar
+    margin: 1px
+
 
 // forms
 
